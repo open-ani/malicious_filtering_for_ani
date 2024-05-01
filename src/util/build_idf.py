@@ -155,19 +155,19 @@ def clean_idf_file(input_file, output_file):
 if __name__ == '__main__':
     init_jieba()
     # corpus_dir = '../data/clean_chat_corpus/'  # Directory containing text documents
-    # output_file = '../data/my_idf1.txt'  # File to store IDF values
+    # output_file = '../data/my_idf_from_corpus.txt'  # File to store IDF values
     # build_idf_file(corpus_dir, output_file)
 
-    # input_file = "../../data/my_idf.txt"
-    # output_file = "../../data/cleaned_idf2.txt"
+    # input_file = "../../data/3rd_party_idf.txt"
+    # output_file = "../../data/3rd_party_idf_cleaned.txt"
     #
     # clean_idf_file(input_file, output_file)
     # corpus_file = '../../data/toxic_comment_train_text.txt'
-    # output_file = '../../data/my_idf3.txt'
+    # output_file = '../../data/my_idf_from_toxic.txt'
     # build_idf_from_file(corpus_file, output_file)
 
-    idf_file1 = "../../data/cleaned_idf.txt"
-    idf_file2 = "../../data/cleaned_idf2.txt"
-    idf_file3 = "../../data/my_idf3.txt"
-    output_file = "../../data/combined_idf.txt"
+    idf_file1 = "../../data/my_idf_from_corpus_cleaned.txt"
+    idf_file2 = "../../data/3rd_party_idf_cleaned.txt"
+    idf_file3 = "../../data/my_idf_from_toxic.txt"
+    output_file = "../../data/idfs/combined_idf.txt"
     combine_idf_files(idf_file1, idf_file2, idf_file3, output_file)

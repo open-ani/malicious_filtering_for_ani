@@ -35,7 +35,7 @@ def init_jieba():
     jieba.analyse.set_stop_words('../data/stopword.txt')
 
     # tf-idf语料：https://github.com/codemayq/chinese-chatbot-corpus
-    jieba.analyse.set_idf_path("../data/my_idf3.txt")
+    jieba.analyse.set_idf_path("../data/my_idf_from_toxic.txt")
 
 
 def get_tokens(text):
