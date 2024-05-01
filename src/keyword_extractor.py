@@ -1,3 +1,5 @@
+import time
+
 import jieba
 from jieba import analyse
 
@@ -35,7 +37,7 @@ def init_jieba():
     jieba.analyse.set_stop_words('../data/stopword.txt')
 
     # tf-idf语料：https://github.com/codemayq/chinese-chatbot-corpus
-    jieba.analyse.set_idf_path("../data/my_idf_from_toxic.txt")
+    jieba.analyse.set_idf_path('../data/idfs/combined_idf.txt')
 
 
 def get_tokens(text):
@@ -51,7 +53,11 @@ def get_keywords(text, k):
 
 if __name__ == '__main__':
     init_jieba()
-    text = "但是也听过她的一些料。网上那个浙江卫视打压她是真的。因为毕竟是浙江卫视耗费人力资源捧红了她，她却在最红的时候离开，把浙江卫视真的气到了，各种打压她。本来蛮火的，呆在浙江卫视的话不能说更火，但好歹也不会怎么差下去，现在就真的不能算一线了…"
-    print(get_tokens(text))
-    print(get_keywords(text, 5))
+    text = "不错＋1，后面那个台湾人回山东拜年的，我不拿它当小品，而是当一个温情情景剧，说实话也还可以，但是蔡明那个节目真的是让我恶心到了，他妈的不能好好说话吗？非要这么做作，当全国观众都是需要大人捏嗓子逗的婴儿？"
+    start = time.time()
+    print(text)
+    print("tokens" + str(get_tokens(text)))
+    print("Keyword: " + str(get_keywords(text, 5)))
+    end = time.time()
+    print("Time: " + str(end - start))
 
