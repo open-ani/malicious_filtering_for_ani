@@ -38,7 +38,7 @@ def init_jieba():
     jieba.load_userdict('../../data/字典/val_keywords.txt')
 
     # 停用词合集
-    jieba.analyse.set_stop_words('../../data/stopword.txt')
+    jieba.analyse.set_stop_words('../../../data/stopword.txt')
 
     # 敏感词合集：
     jieba.load_userdict('../../data/字典/脏话.txt')
@@ -104,7 +104,7 @@ def build_idf_from_file(corpus_file, output_file):
     with open(corpus_file, 'r', encoding='utf-8') as file:
         documents = file.read().split('\n')
 
-    stop_words = get_stop_words('../../data/stopword.txt')
+    stop_words = get_stop_words('../../../data/stopword.txt')
 
     # Step 2: Preprocess each document using Jieba for tokenization
     preprocessed_docs = [dataPrepos(doc, stop_words) for doc in documents]
@@ -216,8 +216,8 @@ if __name__ == '__main__':
     # output_file = "../../data/3rd_party_idf_cleaned.txt"
     #
     # clean_idf_file(input_file, output_file)
-    corpus_file = '../../data/toxic_comment_data/toxic_comment_train_text.txt'
-    output_file = '../../data/idfs/my_idf_from_toxic.txt'
+    corpus_file = '../../../data/toxic_comment_data/toxic_comment_train_text.txt'
+    output_file = '../../../data/idfs/my_idf_from_toxic.txt'
     build_idf_from_file(corpus_file, output_file)
 
     # build_tf_idf_model(corpus_file)

@@ -1,12 +1,7 @@
 import time
 
 import jieba
-from jieba import analyse, posseg
-from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.feature_extraction.text import CountVectorizer
-from joblib import dump, load
-
-from src.util.build_idf import get_stop_words, dataPrepos
+from jieba import analyse
 
 
 def init_jieba():
@@ -39,7 +34,7 @@ def init_jieba():
     jieba.load_userdict('../data/字典/色情词库cleaned.txt')
 
     # 停用词合集
-    jieba.analyse.set_stop_words('../data/stopword.txt')
+    jieba.analyse.set_stop_words('../../data/stopword.txt')
 
     # tf-idf语料：https://github.com/codemayq/chinese-chatbot-corpus
     jieba.analyse.set_idf_path('../data/idfs/my_idf_from_toxic.txt')
