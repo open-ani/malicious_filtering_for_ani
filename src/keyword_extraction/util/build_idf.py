@@ -1,3 +1,5 @@
+import pickle
+
 import jieba
 from collections import defaultdict
 import os
@@ -6,53 +8,43 @@ import jieba.posseg
 import jieba.analyse
 import numpy as np
 from sklearn import feature_extraction
-from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.feature_extraction.text import TfidfTransformer, TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from joblib import dump, load
 
 
 def init_jieba():
     # 导入我找到的一些词 数据来源：https://github.com/bigzhao/Keyword_Extraction
-    jieba.load_userdict('../../data/字典/明星.txt')
-    jieba.load_userdict('../../data/字典/实体名词.txt')
-    jieba.load_userdict('../../data/字典/歌手.txt')
-    jieba.load_userdict('../../data/字典/动漫.txt')
-    jieba.load_userdict('../../data/字典/电影.txt')
-    jieba.load_userdict('../../data/字典/电视剧.txt')
-    jieba.load_userdict('../../data/字典/流行歌.txt')
-    jieba.load_userdict('../../data/字典/创造101.txt')
-    jieba.load_userdict('../../data/字典/百度明星.txt')
-    jieba.load_userdict('../../data/字典/美食.txt')
-    jieba.load_userdict('../../data/字典/FIFA.txt')
-    jieba.load_userdict('../../data/字典/NBA.txt')
-    jieba.load_userdict('../../data/字典/网络流行新词.txt')
-    jieba.load_userdict('../../data/字典/显卡.txt')
+    jieba.load_userdict('../../../data/字典/明星.txt')
+    jieba.load_userdict('../../../data/字典/实体名词.txt')
+    jieba.load_userdict('../../../data/字典/歌手.txt')
+    jieba.load_userdict('../../../data/字典/动漫.txt')
+    jieba.load_userdict('../../../data/字典/电影.txt')
+    jieba.load_userdict('../../../data/字典/电视剧.txt')
+    jieba.load_userdict('../../../data/字典/流行歌.txt')
+    jieba.load_userdict('../../../data/字典/创造101.txt')
+    jieba.load_userdict('../../../data/字典/百度明星.txt')
+    jieba.load_userdict('../../../data/字典/美食.txt')
+    jieba.load_userdict('../../../data/字典/FIFA.txt')
+    jieba.load_userdict('../../../data/字典/NBA.txt')
+    jieba.load_userdict('../../../data/字典/网络流行新词.txt')
+    jieba.load_userdict('../../../data/字典/显卡.txt')
 
     # 爬取漫漫看网站和百度热点上面的词条，人名，英文组织
-    jieba.load_userdict('../../data/字典/漫漫看_明星.txt')
-    jieba.load_userdict('../../data/字典/百度热点人物+手机+软件.txt')
-    jieba.load_userdict('../../data/字典/自定义词典.txt')
-    jieba.load_userdict('../../data/字典/person.txt')
-    jieba.load_userdict('../../data/字典/origin_zimu.txt')
-    jieba.load_userdict('../../data/字典/出现的作品名字.txt')
-    jieba.load_userdict('../../data/字典/val_keywords.txt')
+    jieba.load_userdict('../../../data/字典/漫漫看_明星.txt')
+    jieba.load_userdict('../../../data/字典/百度热点人物+手机+软件.txt')
+    jieba.load_userdict('../../../data/字典/自定义词典.txt')
+    jieba.load_userdict('../../../data/字典/person.txt')
+    jieba.load_userdict('../../../data/字典/origin_zimu.txt')
+    jieba.load_userdict('../../../data/字典/出现的作品名字.txt')
+    jieba.load_userdict('../../../data/字典/val_keywords.txt')
 
     # 停用词合集
     jieba.analyse.set_stop_words('../../../data/stopword.txt')
 
     # 敏感词合集：
-    jieba.load_userdict('../../data/字典/脏话.txt')
-    jieba.load_userdict('../../data/字典/色情词库cleaned.txt')
-
-
-def clean_dictionary(input_file, output_file):
-    """Removes numerical values from each line in the input file,
-    leaving only the words, and writes the cleaned data to the output file."""
-
-    with open(input_file, 'r', encoding='utf-8') as f_in, open(output_file, 'w', encoding='utf-8') as f_out:
-        for line in f_in:
-            word = line.split()[0]
-            f_out.write(f"{word}\n")
+    jieba.load_userdict('../../../data/字典/脏话.txt')
+    jieba.load_userdict('../../../data/字典/色情词库cleaned.txt')
 
 
 def get_stop_words(stop_file_path):
@@ -75,42 +67,29 @@ def dataPrepos(text, stopkey):
     return ' '.join(l)
 
 
-# def build_tf_idf_model(corpus_file, output_file=None):
-#     stop_words = get_stop_words("../../data/stopword.txt")
-#     with open(corpus_file, 'r', encoding='utf-8') as file:
-#         documents = file.read().split('\n')
-#     print("Pre-Processing")
-#     preprocessed_docs = [dataPrepos(doc, stop_words) for doc in documents]
-#     cv = CountVectorizer(max_df=0.9)
-#     print("Fitting.")
-#     word_count_vector = cv.fit_transform(preprocessed_docs)
-#     print(word_count_vector.shape)
-#     cv_file = '../../data/cv.joblib'
-#     dump(cv, cv_file)
-#     transformer_file = '../../data/tfidf_transformer.joblib'
-#     if os.path.exists(transformer_file):
-#         tfidf_transformer = load("../../data/tfidf_transformer.joblib")
-#     else:
-#         tfidf_transformer = TfidfTransformer(smooth_idf=True, use_idf=True)
-#         tfidf_transformer.fit(word_count_vector)
-#         dump(tfidf_transformer, transformer_file)
-#
-#     tfidf_matrix = tfidf_transformer.transform(word_count_vector)
-#     print(tfidf_matrix.shape)
-
-
-def build_idf_from_file(corpus_file, output_file):
-    # Step 1: Load the corpus into a list of documents
-    with open(corpus_file, 'r', encoding='utf-8') as file:
-        documents = file.read().split('\n')
-
+# this is used by jieba to do keyword extraction
+def build_idf_from_folder(corpus_dir, output_file):
+    documents = os.listdir(corpus_dir)
+    print(documents)
+    preprocessed_documents = []
     stop_words = get_stop_words('../../../data/stopword.txt')
 
-    # Step 2: Preprocess each document using Jieba for tokenization
-    preprocessed_docs = [dataPrepos(doc, stop_words) for doc in documents]
+    # Process each document
+    for doc_name in documents:
+        doc_path = os.path.join(corpus_dir, doc_name)
+        print(f"Processing: {doc_name}")
+        with open(doc_path, 'r', encoding='utf-8') as file:
+            documents = file.read().split('\n')
 
-    # Step 3: Create the document-term matrix using CountVectorizer
-    vectorizer = CountVectorizer()
+        # Step 2: Preprocess each document using Jieba for tokenization
+        preprocessed_docs = [dataPrepos(doc, stop_words) for doc in documents]
+        preprocessed_documents += preprocessed_docs
+
+    vectorizer = CountVectorizer(
+        min_df=2,  # Minimum frequency for a word to be included
+        max_df=0.85,  # Maximum proportion of documents a word can appear in
+        ngram_range=(1, 3),  # Include unigrams, bigrams, and trigrams
+    )
     doc_term_matrix = vectorizer.fit_transform(preprocessed_docs)
 
     # Step 4: Get the terms and calculate document frequencies
@@ -125,34 +104,6 @@ def build_idf_from_file(corpus_file, output_file):
     with open(output_file, 'w', encoding='utf-8') as f_out:
         for term, idf in idf_values.items():
             f_out.write(f"{term} {idf}\n")
-
-
-# def build_idf_from_folder(corpus_dir, output_file):
-#     """Builds an IDF file from a corpus of text documents."""
-#     term_df = defaultdict(int)  # Dictionary to store term document frequencies
-#     documents = os.listdir(corpus_dir)  # List all documents in the corpus directory
-#     total_docs = len(documents)
-#
-#     # Process each document
-#     for doc_name in documents:
-#         print(doc_name)
-#         doc_path = os.path.join(corpus_dir, doc_name)
-#
-#         with open(doc_path, 'r', encoding='utf-8') as f:
-#             content = f.read()
-#
-#         # Tokenize the content
-#         terms = set(jieba.cut(content))  # Use a set to avoid duplicate terms
-#
-#         # Update document frequency for each unique term
-#         for term in terms:
-#             term_df[term] += 1
-#
-#     # Write the IDF values to the output file
-#     with open(output_file, 'w', encoding='utf-8') as f_out:
-#         for term, df in term_df.items():
-#             idf_value = math.log((total_docs / (df + 1)) + 1)
-#             f_out.write(f"{term} {idf_value}\n")
 
 
 def load_idf_file(file_path):
@@ -205,22 +156,64 @@ def clean_idf_file(input_file, output_file):
                 except ValueError:
                     continue  # Skip lines with non-numerical IDF values
 
+# ----------------------------- scikit-learn version -----------------------------
+
+
+# this is used by scikit-learn to do keyword extraction
+def build_tfidf_from_folder(corpus_dir, output_file, vectorizer_file='../../../data/vectorizer.pkl'):
+    """
+    Computes and saves the TF-IDF matrix for documents in the specified folder.
+
+    Args:
+    - corpus_dir (str): The path to the directory containing text documents.
+    - output_file (str): The path to the output file where the TF-IDF matrix should be saved.
+    - stopkey (set): A set of stop words to exclude during preprocessing.
+
+    Returns:
+    - None
+    """
+    documents = os.listdir(corpus_dir)  # List all documents in the corpus directory
+    print(documents)
+
+    # List to store preprocessed documents
+    preprocessed_documents = []
+    stop_words = get_stop_words('../../../data/stopword.txt')
+
+    # Process each document
+    for doc_name in documents:
+        doc_path = os.path.join(corpus_dir, doc_name)
+        print(f"Processing: {doc_name}")
+        with open(doc_path, 'r', encoding='utf-8') as file:
+            documents = file.read().split('\n')
+
+        # Step 2: Preprocess each document using Jieba for tokenization
+        preprocessed_docs = [dataPrepos(doc, stop_words) for doc in documents]
+        preprocessed_documents += preprocessed_docs
+
+    # Initialize the TF-IDF vectorizer
+    vectorizer = TfidfVectorizer(
+        min_df=2,  # Minimum frequency for a word to be included
+        max_df=0.85,  # Maximum proportion of documents a word can appear in
+        ngram_range=(1, 3),  # Include unigrams, bigrams, and trigrams
+        smooth_idf=True  # Apply smoothing to IDF scores
+    )
+    tfidf_matrix = vectorizer.fit_transform(preprocessed_documents)
+    feature_names = vectorizer.get_feature_names_out()
+    print(f"Number of terms: {len(feature_names)}")
+    print(f"TF-IDF matrix shape: {tfidf_matrix.shape}")
+
+    # Save the TF-IDF matrix to the specified file
+    np.savetxt(output_file, tfidf_matrix.toarray(), delimiter=',')
+    with open(vectorizer_file, 'wb') as f:
+        pickle.dump(vectorizer, f)
+
 
 if __name__ == '__main__':
     init_jieba()
-    # corpus_dir = '../data/clean_chat_corpus/'  # Directory containing text documents
-    # output_file = '../data/my_idf_from_corpus.txt'  # File to store IDF values
-    # build_idf_file(corpus_dir, output_file)
-
-    # input_file = "../../data/3rd_party_idf.txt"
-    # output_file = "../../data/3rd_party_idf_cleaned.txt"
-    #
-    # clean_idf_file(input_file, output_file)
-    corpus_file = '../../../data/toxic_comment_data/toxic_comment_train_text.txt'
-    output_file = '../../../data/idfs/my_idf_from_toxic.txt'
-    build_idf_from_file(corpus_file, output_file)
-
-    # build_tf_idf_model(corpus_file)
+    corpus_file = '../../../data/corpus/'
+    output_file = '../../../data/idfs/my_idf_from_corpus_folder_2.txt'
+    build_idf_from_folder(corpus_file, output_file)
+    # build_tfidf_from_folder(corpus_file, output_file)
 
     # idf_file1 = "../../data/my_idf_from_corpus_cleaned.txt"
     # idf_file2 = "../../data/3rd_party_idf_cleaned.txt"

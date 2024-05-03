@@ -1,43 +1,47 @@
+import pickle
 import time
 
 import jieba
 from jieba import analyse
+import numpy as np
+
+from src.keyword_extraction.util.build_idf import dataPrepos, get_stop_words
 
 
 def init_jieba():
     # 导入我找到的一些词 数据来源：https://github.com/bigzhao/Keyword_Extraction
-    jieba.load_userdict('../data/字典/明星.txt')
-    jieba.load_userdict('../data/字典/实体名词.txt')
-    jieba.load_userdict('../data/字典/歌手.txt')
-    jieba.load_userdict('../data/字典/动漫.txt')
-    jieba.load_userdict('../data/字典/电影.txt')
-    jieba.load_userdict('../data/字典/电视剧.txt')
-    jieba.load_userdict('../data/字典/流行歌.txt')
-    jieba.load_userdict('../data/字典/创造101.txt')
-    jieba.load_userdict('../data/字典/百度明星.txt')
-    jieba.load_userdict('../data/字典/美食.txt')
-    jieba.load_userdict('../data/字典/FIFA.txt')
-    jieba.load_userdict('../data/字典/NBA.txt')
-    jieba.load_userdict('../data/字典/网络流行新词.txt')
-    jieba.load_userdict('../data/字典/显卡.txt')
+    jieba.load_userdict('../../data/字典/明星.txt')
+    jieba.load_userdict('../../data/字典/实体名词.txt')
+    jieba.load_userdict('../../data/字典/歌手.txt')
+    jieba.load_userdict('../../data/字典/动漫.txt')
+    jieba.load_userdict('../../data/字典/电影.txt')
+    jieba.load_userdict('../../data/字典/电视剧.txt')
+    jieba.load_userdict('../../data/字典/流行歌.txt')
+    jieba.load_userdict('../../data/字典/创造101.txt')
+    jieba.load_userdict('../../data/字典/百度明星.txt')
+    jieba.load_userdict('../../data/字典/美食.txt')
+    jieba.load_userdict('../../data/字典/FIFA.txt')
+    jieba.load_userdict('../../data/字典/NBA.txt')
+    jieba.load_userdict('../../data/字典/网络流行新词.txt')
+    jieba.load_userdict('../../data/字典/显卡.txt')
 
     # 爬取漫漫看网站和百度热点上面的词条，人名，英文组织
-    jieba.load_userdict('../data/字典/漫漫看_明星.txt')
-    jieba.load_userdict('../data/字典/百度热点人物+手机+软件.txt')
-    jieba.load_userdict('../data/字典/自定义词典.txt')
-    jieba.load_userdict('../data/字典/person.txt')
-    jieba.load_userdict('../data/字典/origin_zimu.txt')
-    jieba.load_userdict('../data/字典/出现的作品名字.txt')
-    jieba.load_userdict('../data/字典/val_keywords.txt')
+    jieba.load_userdict('../../data/字典/漫漫看_明星.txt')
+    jieba.load_userdict('../../data/字典/百度热点人物+手机+软件.txt')
+    jieba.load_userdict('../../data/字典/自定义词典.txt')
+    jieba.load_userdict('../../data/字典/person.txt')
+    jieba.load_userdict('../../data/字典/origin_zimu.txt')
+    jieba.load_userdict('../../data/字典/出现的作品名字.txt')
+    jieba.load_userdict('../../data/字典/val_keywords.txt')
     # 敏感词合集：
-    jieba.load_userdict('../data/字典/脏话.txt')
-    jieba.load_userdict('../data/字典/色情词库cleaned.txt')
+    jieba.load_userdict('../../data/字典/脏话.txt')
+    jieba.load_userdict('../../data/字典/色情词库cleaned.txt')
 
     # 停用词合集
     jieba.analyse.set_stop_words('../../data/stopword.txt')
 
     # tf-idf语料：https://github.com/codemayq/chinese-chatbot-corpus
-    jieba.analyse.set_idf_path('../data/idfs/my_idf_from_toxic.txt')
+    jieba.analyse.set_idf_path('../../data/idfs/my_idf_from_corpus_folder_2_cleaned.txt')
 
 
 def get_tokens(text):
@@ -51,28 +55,47 @@ def get_keywords(text, k):
     return keywords
 
 
-# def get_keywords_from_model(text, k):
-#     tfidf_transformer = load("../data/tfidf_transformer.joblib")
-#     vectorizer = load("../data/cv.joblib")
-#     stop_words = get_stop_words("../data/stopword.txt")
-#     text = dataPrepos(text, stop_words)
-#     # Convert text into a list
-#     texts = [text]
-#     word_count_vector = vectorizer.transform(texts)
-#     tfidf_matrix = tfidf_transformer.transform(word_count_vector)
-#     terms = vectorizer.get_feature_names_out()
+# def extract_keywords(new_text, vectorizer_file):
+#     """
+#     Extracts keywords from a given text using a previously built TF-IDF model.
 #
-#     tfidf_scores = tfidf_matrix.toarray()[0]  # Convert sparse matrix to an array
+#     Args:
+#     - new_text (str): The new text document from which to extract keywords.
+#     - vectorizer_file (str): The path to the file where the fitted TfidfVectorizer model is stored.
+#     - stopkey (set): A set of stop words to exclude during preprocessing.
 #
-#     keywords = sorted(zip(terms, tfidf_scores), key=lambda x: x[1], reverse=True)
+#     Returns:
+#     - List[str]: A list of top keywords from the text.
+#     """
+#     stopkey = get_stop_words('../../data/stopword.txt')
+#     # Preprocess the text
+#     preprocessed_text = dataPrepos(new_text, stopkey)
 #
-#     for term, score in keywords[:k]:
-#         print(f"Keyword: {term}, Score: {score}")
+#     # Load the TF-IDF vectorizer
+#     with open(vectorizer_file, 'rb') as f:
+#         vectorizer = pickle.load(f)
+#
+#     # Transform the new text into a TF-IDF vector
+#     tfidf_vector = vectorizer.transform([preprocessed_text])
+#
+#     # Extract keywords
+#     row = tfidf_vector.toarray()[0]
+#
+#     # Get the feature names
+#     feature_names = vectorizer.get_feature_names_out()
+#
+#     # Get the indices of terms sorted by their TF-IDF scores
+#     top_indices = np.argsort(row)[::-1]  # Sort in descending order
+#
+#     # Return the top 10 terms
+#     top_keywords = [feature_names[idx] for idx in top_indices[:10]]
+#
+#     return top_keywords
 
 
 if __name__ == '__main__':
     init_jieba()
-    text = ("也是，想想物流爆仓等半个月和打砸抢烧丧尸围城一般冒着被黑人胖大妈一屁股坐死的风险半夜2点去门店排队，我宁愿等着，慢就慢吧，命比较重要")
+    text = ("杭州人都是傻逼")
     start = time.time()
     print(text)
     print("tokens" + str(get_tokens(text)))
