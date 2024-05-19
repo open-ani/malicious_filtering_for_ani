@@ -95,11 +95,12 @@ def get_keywords(text, k):
 
 if __name__ == '__main__':
     init_jieba()
-    text = ("杭州人都是傻逼")
+    lines = []
+    with open('../../data/test.txt', 'r', encoding='utf-8') as f:
+        lines = f.read().splitlines()  # This will read the file and split by newlines
     start = time.time()
-    print(text)
-    print("tokens" + str(get_tokens(text)))
-    print("Keyword: " + str(get_keywords(text, 5)))
+    for l in lines:
+        print("Keyword: " + str(get_keywords(l, 5)))
     end = time.time()
     print("Time: " + str(end - start))
     # seg = jieba.posseg.cut("不错＋1，后面那个台湾人回山东拜年的，我不拿它当小品，而是当一个温情情景剧，说实话也还可以，但是蔡明那个节目真的是"

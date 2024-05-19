@@ -11,6 +11,7 @@ from sklearn import feature_extraction
 from sklearn.feature_extraction.text import TfidfTransformer, TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from joblib import dump, load
+import pandas as pd
 
 
 def init_jieba():
@@ -59,12 +60,16 @@ def get_stop_words(stop_file_path):
 def dataPrepos(text, stopkey):
     l = []
     pos = ['n', 'nz', 'v', 'vd', 'vn', 'l', 'a', 'd', 'j', 'i', 'y', 'z', 'e', 'df', 'ad', 'an', 'b', 'ns', 'nrt', 'ng',
-           'nrfg', 'nt', 'q', 'r', 'vi']  # 定义选取的词性
+           'nrfg', 'nt', 'q', 'r', 'vi', 'nr', 'x']  # 定义选取的词性
     seg = jieba.posseg.cut(text)  # 分词
     for i in seg:
         if i.word not in stopkey and i.flag in pos:  # 去停用词 + 词性筛选
             l.append(i.word)
     return ' '.join(l)
+
+
+
+# ----------------------------- Jieba version -----------------------------
 
 
 # this is used by jieba to do keyword extraction
@@ -156,6 +161,7 @@ def clean_idf_file(input_file, output_file):
                 except ValueError:
                     continue  # Skip lines with non-numerical IDF values
 
+
 # ----------------------------- scikit-learn version -----------------------------
 
 
@@ -210,9 +216,22 @@ def build_tfidf_from_folder(corpus_dir, output_file, vectorizer_file='../../../d
 
 if __name__ == '__main__':
     init_jieba()
-    corpus_file = '../../../data/corpus/'
-    output_file = '../../../data/idfs/my_idf_from_corpus_folder_2.txt'
-    build_idf_from_folder(corpus_file, output_file)
+    # corpus_file = '../../../data/corpus/'
+    # output_file = '../../../data/idfs/my_idf_from_corpus_folder_2.txt'
+
+    df = pd.read_csv('../../../data/toxic_comment_data/toxic_comment_train.csv')
+    stop_words = get_stop_words('../../../data/stopword.txt')
+
+    # Apply the predefined function to the TEXT column
+    df['TEXT'] = df['TEXT'].apply(lambda x: dataPrepos(x, stop_words))
+
+    # Save the modified DataFrame back to CSV
+    df.to_csv('../../../data/toxic_comment_data/toxic_comment_train_processed.csv', index=False)
+
+    text = "这样的女人真恶心"
+    dataPrepos(text, stop_words)
+
+    # build_idf_from_folder(corpus_file, output_file)
     # build_tfidf_from_folder(corpus_file, output_file)
 
     # idf_file1 = "../../data/my_idf_from_corpus_cleaned.txt"
