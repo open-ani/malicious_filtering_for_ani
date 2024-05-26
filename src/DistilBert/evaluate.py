@@ -1,10 +1,14 @@
+import json
+
 import pandas as pd
+import numpy as np
 import torch
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification, Trainer, TrainingArguments
 from datasets import Dataset
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill
+import psutil
 
 
 def load_test_data(data_path, tokenizer):
@@ -38,9 +42,9 @@ def compute_metrics(pred):
     }
 
 
-def main():
+def evaluate_model_and_run_example():
     # Load the fine-tuned model and tokenizer
-    save_directory = './model'
+    save_directory = './model_small'
     tokenizer = DistilBertTokenizer.from_pretrained(save_directory)
     model = DistilBertForSequenceClassification.from_pretrained(save_directory)
 
@@ -50,7 +54,7 @@ def main():
 
     # Create Trainer instance for prediction
     training_args = TrainingArguments(
-        output_dir='./results',  # output directory
+        output_dir='./results_small',  # output directory
         per_device_eval_batch_size=16,  # batch size for evaluation
     )
 
@@ -59,9 +63,30 @@ def main():
         args=training_args,
     )
 
+    # Track memory usage before prediction
+    process = psutil.Process()
+    memory_before = process.memory_info().rss / 1024 ** 2  # in MB
+    print(f"Memory usage before prediction: {memory_before:.2f} MB")
+
     # Predict on test data
     predictions = trainer.predict(test_dataset)
-    preds = predictions.predictions.argmax(-1)
+
+    # Track memory usage after prediction
+    memory_after = process.memory_info().rss / 1024 ** 2  # in MB
+    print(f"Memory usage after prediction: {memory_after:.2f} MB")
+
+    logits = predictions.predictions
+
+    # Get the class with the highest predicted probability
+    preds = logits.argmax(-1)
+
+    # Calculate the softmax to get probabilities
+    probabilities = np.exp(logits) / np.exp(logits).sum(-1, keepdims=True)
+
+    # Get the confidence level for each prediction
+    confidences = probabilities.max(-1)
+
+    df['confidence'] = confidences
 
     # Add predictions to the DataFrame
     df['predictions'] = preds
@@ -69,8 +94,14 @@ def main():
     # Highlight incorrect predictions
     df['correct'] = df['label'] == df['predictions']
 
+    # calculate sum of incorrect confidence
+
+    incorrect_confidence = df[df['correct'] == False]['confidence'].sum()
+
+    print(f"Sum of incorrect confidence: {incorrect_confidence}")
+
     # Save to Excel
-    save_to_excel(df, 'test_results.xlsx')
+    save_to_excel(df, 'test_results_2.xlsx')
 
     # Calculate evaluation metrics
     labels = df['label'].tolist()
@@ -106,4 +137,4 @@ def save_to_excel(df, file_name):
 
 
 if __name__ == '__main__':
-    main()
+    evaluate_model_and_run_example()
