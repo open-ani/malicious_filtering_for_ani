@@ -1,0 +1,13 @@
+data_configs:
+    data_dir: "/Users/richardli/Desktop/openani/malicious_filtering_for_ani/data"
+    external_raw_data_dir: "/Users/richardli/Desktop/openani/malicious_filtering_for_ani/data/external_raw/"
+    interim_data_dir: "/Users/richardli/Desktop/openani/malicious_filtering_for_ani/data/interim/"
+    processed_data_dir: "/Users/richardli/Desktop/openani/malicious_filtering_for_ani/data/processed/"
+    internal_data_dir: "/Users/richardli/Desktop/openani/malicious_filtering_for_ani/data/internal/"
+    results_dir: "/Users/richardli/Desktop/openani/malicious_filtering_for_ani/data/results/"
+    word2vec_model: "/Users/richardli/Desktop/openani/malicious_filtering_for_ani/data/external_raw/word2vec/word2vec模型sgns.target.word-ngram.1-2.dynwin5.thr10.neg5.dim300.iter5.bz2"
+
+models:
+  model_dir: "/Users/richardli/Desktop/openani/malicious_filtering_for_ani/models/"
+
+

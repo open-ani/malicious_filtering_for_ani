@@ -2,51 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification, Trainer, TrainingArguments
-import torch
 from transformers import EarlyStoppingCallback
 from datasets import Dataset
 
-
-def load_data(data_path):
-    """
-    Load the data from the given path
-    :param data_path: the path to the data.
-    :return: the data as a pandas dataframe.
-    """
-    df = pd.read_csv(data_path, sep=',', header=0)
-    df = df[['label', 'text']]
-    return df
-
-
-def visualize_data_distribution_matplotlib(v_data):
-    """
-    Visualize the distribution of the data using matplotlib
-    :param v_data: the data to visualize, should have a 'label' column
-    :return: None
-    """
-    print(v_data['label'].value_counts())
-    print(v_data['label'].value_counts(normalize=True))
-    v_data['label'].value_counts(ascending=True).plot.barh()
-    plt.title('Class Distribution')
-    plt.show()
-
-
-def count_characters(text):
-    return len(text)
-
-
-def test_exceed_max_tokens(v_data):
-    """
-    Test if the text exceeds the maximum token limit of 512
-    :param v_data: datagram to test, should have a 'text' column
-    :return: Changes the dataframe
-    """
-    v_data['Characters Per Sentence'] = v_data['text'].apply(count_characters)
-    v_data.boxplot(column='Characters Per Sentence', by='label', grid=False, showfliers=False)
-    plt.suptitle("")
-    plt.xlabel("")
-    plt.title('')
-    plt.show()
 
 
 def load_dataset(data):
