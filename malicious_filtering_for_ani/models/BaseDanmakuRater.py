@@ -1,9 +1,14 @@
-from abc import ABC
+import abc
+from abc import ABCMeta
+from typing import List
+
+from routing_schemas import TextsInput, PredictionsOutput
 
 
-class BaseDanmakuRater(ABC):
+class BaseDanmakuFilterer(ABCMeta):
 
-    def __init__(self):
+    @abc.abstractmethod
+    def predict(cls, texts: TextsInput) -> PredictionsOutput:
         pass
 
-    
+
