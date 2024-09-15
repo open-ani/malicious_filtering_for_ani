@@ -1,15 +1,18 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, UploadFile, HTTPException
 from fastapi.responses import Response
 import asyncio
 import msgpack
 import logging
 
-from ...models.routing_schemas import TextsInput
+from ...model.BaseDanmakuRater import COLDDatabseDanmakuFilterer
+from ...model.routing_schemas import TextsInput
 
 app = FastAPI()
 
 logging.basicConfig(filename="api.log", level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+model = COLDDatabseDanmakuFilterer()
 
 @app.post("/v1/filter")
 async def predict(file: UploadFile):
