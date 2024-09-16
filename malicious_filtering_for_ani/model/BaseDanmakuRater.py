@@ -6,7 +6,7 @@ import asyncio
 import torch
 
 from transformers.models.bert import BertTokenizer, BertForSequenceClassification
-from routing_schemas import TextsInput, PredictionsOutput
+from .routing_schemas import TextsInput, PredictionsOutput
 
 logging.basicConfig(filename="model.log", level=logging.INFO)
 logger = logging.getLogger(__name__)

@@ -1,7 +1,5 @@
 from pydantic import BaseModel, model_validator
-from typing import List
-
-# This schema is to be changed to match the input and output of the model and the client.
+from typing import List, Tuple
 
 class TextsInput(BaseModel):
     texts: List[str]
@@ -13,7 +11,7 @@ class TextsInput(BaseModel):
         return self
 
 class PredictionsOutput(BaseModel):
-    predictions: List[(str, float)]
+    predictions: List[Tuple[str, float]]
 
     @model_validator(mode='after')
     def check_list_not_empty(self):
