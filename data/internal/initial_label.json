@@ -1,0 +1,382 @@
+{
+  "comments": [
+    {
+    "comment": "所以你丫的就主动联合保守派把他们全带出来一波送走是吧",
+    "low_quality": 0,
+    "offensive": 1,
+    "spoiler": 0,
+    "length": 21,
+    "sentiment": -0.7,
+    "filtered": 1
+  },
+  {
+    "comment": "她真的太会了",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 6,
+    "sentiment": 0.7,
+    "filtered": 0
+  },
+  {
+    "comment": "闪闪你掏错人了，伊莉雅在下面",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 1,
+    "length": 14,
+    "sentiment": -0.2,
+    "filtered": 1
+  },
+  {
+    "comment": "使徒来袭(bushi)",
+    "low_quality": 1,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 11,
+    "sentiment": 0.0,
+    "filtered": 1
+  },
+  {
+    "comment": "当别人说你发狂时，你最好真的能发狂",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 14,
+    "sentiment": 0.5,
+    "filtered": 0
+  },
+  {
+    "comment": "提尔提怎么一幅败犬样阿（笑）",
+    "low_quality": 0,
+    "offensive": 1,
+    "spoiler": 0,
+    "length": 13,
+    "sentiment": -0.6,
+    "filtered": 1
+  },
+  {
+    "comment": "不掩饰拖延时间了是吧？",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 11,
+    "sentiment": -0.3,
+    "filtered": 0
+  },
+  {
+    "comment": "你搁这换内存呢，还插上就能用",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 14,
+    "sentiment": -0.5,
+    "filtered": 0
+  },
+  {
+    "comment": "你这燕国地图有点短啊",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 9,
+    "sentiment": -0.4,
+    "filtered": 0
+  },
+  {
+    "comment": "抓这手，哪怕没证据你是同谋，袭击公主就能定个死罪了吧",
+    "low_quality": 0,
+    "offensive": 1,
+    "spoiler": 1,
+    "length": 22,
+    "sentiment": -0.8,
+    "filtered": 1
+  },
+  {
+    "comment": "一家子抛瓦怪",
+    "low_quality": 1,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 6,
+    "sentiment": 0.0,
+    "filtered": 1
+  },
+  {
+    "comment": "掏心窝子了还能说话是吧",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 13,
+    "sentiment": -0.3,
+    "filtered": 0
+  },
+  {
+    "comment": "心脏逃跑了",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 7,
+    "sentiment": -0.2,
+    "filtered": 0
+  },
+  {
+    "comment": "居然真的有用。。",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 8,
+    "sentiment": 0.4,
+    "filtered": 0
+  },
+  {
+    "comment": "这叫插叙",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 5,
+    "sentiment": 0.0,
+    "filtered": 0
+  },
+  {
+    "comment": "板板鸭赛高",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 6,
+    "sentiment": 0.7,
+    "filtered": 0
+  },
+  {
+    "comment": "不觉得三费跳猪很酷吗",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 11,
+    "sentiment": 0.5,
+    "filtered": 0
+  },
+  {
+    "comment": "人类的力量是有极限的",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 9,
+    "sentiment": 0.1,
+    "filtered": 0
+  },
+  {
+    "comment": "不是有个更严重的要你去看啊",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 12,
+    "sentiment": 0.0,
+    "filtered": 0
+  },
+  {
+    "comment": "不打自招了属于是，秋后算账好找人",
+    "low_quality": 0,
+    "offensive": 1,
+    "spoiler": 0,
+    "length": 16,
+    "sentiment": -0.6,
+    "filtered": 1
+  },
+  {
+    "comment": "来拖延时间了",
+    "low_quality": 1,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 6,
+    "sentiment": -0.4,
+    "filtered": 1
+  },
+  {
+    "comment": "伊莉雅总和掏心窝子有缘呢",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 12,
+    "sentiment": 0.3,
+    "filtered": 0
+  },
+  {
+    "comment": "黑发一果（）",
+    "low_quality": 1,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 6,
+    "sentiment": 0.0,
+    "filtered": 1
+  },
+  {
+    "comment": "hey ,vergil .....",
+    "low_quality": 1,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 16,
+    "sentiment": 0.0,
+    "filtered": 1
+  },
+  {
+    "comment": "制作组大概想强调一下尤菲在治着，你先别急",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 1,
+    "length": 18,
+    "sentiment": 0.0,
+    "filtered": 1
+  },
+  {
+    "comment": "阿尔，对波不要站左边啊！",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 11,
+    "sentiment": 0.0,
+    "filtered": 0
+  },
+  {
+    "comment": "公主抱！",
+    "low_quality": 1,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 4,
+    "sentiment": 0.0,
+    "filtered": 1
+  },
+  {
+    "comment": "公主坠机时会发出比警报声更大的声音",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 1,
+    "length": 16,
+    "sentiment": 0.0,
+    "filtered": 1
+  },
+  {
+    "comment": "他对姐姐的执念更深，完全没咋被魅惑啊",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 14,
+    "sentiment": 0.1,
+    "filtered": 0
+  },
+  {
+    "comment": "什么沙雕设定 敢当众袭击公主 已经可以当众处决了",
+    "low_quality": 0,
+    "offensive": 1,
+    "spoiler": 0,
+    "length": 18,
+    "sentiment": -0.7,
+    "filtered": 1
+  },
+  {
+    "comment": "尤菲:你在说我？",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 8,
+    "sentiment": 0.0,
+    "filtered": 0
+  },
+  {
+    "comment": "比内娱小鲜肉演得好",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 10,
+    "sentiment": 0.3,
+    "filtered": 0
+  },
+  {
+    "comment": "心脏要逃走啦！",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 8,
+    "sentiment": -0.2,
+    "filtered": 0
+  },
+  {
+    "comment": "眼高手低的典型，会搞得自己跟周边的人更痛苦，也会把事情搞得更糟",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 19,
+    "sentiment": -0.6,
+    "filtered": 0
+  },
+  {
+    "comment": "都什么年代，还在玩传统魔学",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 12,
+    "sentiment": -0.3,
+    "filtered": 0
+  },
+  {
+    "comment": "非得不让艾妮丝不觉得你是在搞拖延是吧",
+    "low_quality": 1,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 13,
+    "sentiment": -0.4,
+    "filtered": 1
+  },
+  {
+    "comment": "跟你说句掏心窝子的话",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 9,
+    "sentiment": 0.0,
+    "filtered": 0
+  },
+  {
+    "comment": "伊莉雅的男友力好强",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 10,
+    "sentiment": 0.6,
+    "filtered": 0
+  },
+  {
+    "comment": "真就大哥不笑二哥",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 9,
+    "sentiment": -0.1,
+    "filtered": 0
+  },
+  {
+    "comment": "我不做人了，欧呢萨嘛",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 11,
+    "sentiment": -0.8,
+    "filtered": 0
+  },
+  {
+    "comment": "此间乐，不思蜀",
+    "low_quality": 0,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 7,
+    "sentiment": 0.3,
+    "filtered": 0
+  },
+  {
+    "comment": "官方解释",
+    "low_quality": 1,
+    "offensive": 0,
+    "spoiler": 0,
+    "length": 4,
+    "sentiment": 0.0,
+    "filtered": 1
+  }
+]
+}
